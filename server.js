@@ -1,22 +1,28 @@
 const express = require('express');
-const cors = require('cors');
-const { execFile } = require('child_process');
-const path = require('path');
-
+const bodyParser = require('body-parser');
 const app = express();
-app.use(cors());
-const PORT = 3000;
+const port = 3000;
 
-app.get('/start-quiz', (req, res) => {
-  const quizExecutable = path.join(__dirname, '..', 'quiz');
-  execFile(quizExecutable, (error, stdout, stderr) => {
-    if (error) {
-      return res.send(`Error running quiz:\n${stderr}`);
-    }
-    res.send(stdout);
-  });
+app.use(bodyParser.json());
+
+// Sample questions
+const questions = [
+  { id: 1, question: 'What is 2 + 2?', options: ['3', '4', '5'], answer: '4' },
+  // Add more questions as needed
+];
+
+// Endpoint to get questions
+app.get('/api/questions', (req, res) => {
+  res.json(questions);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// Endpoint to submit answers
+app.post('/api/submit', (req, res) => {
+  const userAnswers = req.body.answers;
+  // Evaluate answers and send response
+  res.json({ score: /* calculated score */ });
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
