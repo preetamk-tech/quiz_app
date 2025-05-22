@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>India Quiz Game</title>
+  <style>
+    body { font-family: Arial; background: #f0f0f0; text-align: center; margin-top: 50px; }
+    button { padding: 15px 30px; font-size: 20px; background: teal; color: white; border: none; cursor: pointer; }
+    pre { text-align: left; background: #222; color: #0f0; padding: 20px; margin: 20px auto; width: 80%; }
+  </style>
+</head>
+<body>
+  <h1> Welcome to the India Quiz Game!</h1>
+  <button onclick="startQuiz()">Start Quiz</button>
+  <pre id="output"></pre>
+
+  <script>
+    function startQuiz() {
+      fetch('http://localhost:3000/start-quiz')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('output').textContent = data;
+        });
+    }
+  </script>
+</body>
+</html>
